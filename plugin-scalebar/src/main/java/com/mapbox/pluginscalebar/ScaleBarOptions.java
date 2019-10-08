@@ -3,6 +3,7 @@ package com.mapbox.pluginscalebar;
 import android.content.Context;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
+import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.content.ContextCompat;
@@ -14,15 +15,6 @@ import java.util.Locale;
  */
 public class ScaleBarOptions {
   public static final int REFRESH_INTERVAL_DEFAULT = 15;
-
-  /**
-   * Enum for scale bar max width ratio compared with MapView width.
-   */
-  public enum ScaleBarRatio {
-    HALF,
-    THIRD,
-    QUARTER
-  }
 
   private final Context context;
   private int refreshInterval;
@@ -36,7 +28,7 @@ public class ScaleBarOptions {
   private float borderWidth;
   private float textSize;
   private boolean isMetricUnit;
-  private ScaleBarRatio ratio;
+  private float ratio;
 
   public ScaleBarOptions(@NonNull Context context) {
     this.context = context;
@@ -51,7 +43,7 @@ public class ScaleBarOptions {
     setTextColor(android.R.color.black);
     setPrimaryColor(android.R.color.black);
     setSecondaryColor(android.R.color.white);
-    setRatio(ScaleBarRatio.HALF);
+    setRatio(0.5f);
   }
 
   /**
@@ -270,9 +262,9 @@ public class ScaleBarOptions {
   /**
    * Set the ratio of scale bar max width compared with MapView width.
    *
-   * @param ratio the ratio scale bar will use.
+   * @param ratio the ratio scale bar will use, must be in the range from 0.1f to 1.0f.
    */
-  public ScaleBarOptions setRatio(ScaleBarRatio ratio) {
+  public ScaleBarOptions setRatio(@FloatRange(from = 0.1f, to = 1.0f) float ratio) {
     this.ratio = ratio;
     return this;
   }
